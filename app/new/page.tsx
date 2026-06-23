@@ -1,11 +1,11 @@
 import Header from "@/app/components/Header";
-import HomeContent from "@/app/components/HomeContent";
+import NewPageContent from "./components/NewPageContent";
 
-export default function Home() {
+export default function NewLinkPage() {
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
       <Header />
-      <HomeContent />
+      <NewPageContent />
     </div>
   );
 }
