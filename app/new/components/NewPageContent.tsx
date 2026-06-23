@@ -15,7 +15,7 @@ export default function NewPageContent() {
         activeFolder={activeFolder}
         onSelect={setActiveFolder}
       />
-      <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+      <main className="flex-1 overflow-y-auto bg-[var(--bg)] p-6">
         <NewLinkForm selectedFolder={activeFolder} />
       </main>
     </div>

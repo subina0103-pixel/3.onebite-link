@@ -23,24 +23,24 @@ export default function NewLinkForm({ selectedFolder }: Props) {
 
   return (
     <div className="max-w-lg">
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">새 링크 추가</h2>
+      <h2 className="text-xl font-semibold text-[var(--text)] mb-6">새 링크 추가</h2>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-gray-700">링크 URL</label>
+          <label className="text-sm font-medium text-[var(--text)]">링크 URL</label>
           <input
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com"
-            className="border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="input-base"
           />
         </div>
         <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-gray-700">폴더</label>
+          <label className="text-sm font-medium text-[var(--text)]">폴더</label>
           <select
             value={folderId}
             onChange={(e) => setFolderId(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+            className="input-base"
           >
             <option value="">폴더 선택</option>
             {folders.map((folder) => (
@@ -50,10 +50,7 @@ export default function NewLinkForm({ selectedFolder }: Props) {
             ))}
           </select>
         </div>
-        <button
-          onClick={handleSave}
-          className="mt-1 w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white font-medium py-2.5 rounded-lg text-sm"
-        >
+        <button onClick={handleSave} className="btn-primary justify-center mt-1 w-full py-2.5">
           저장
         </button>
       </div>

@@ -28,7 +28,7 @@ export default function FolderPageContent({ folderId }: Props) {
         activeFolder={folderId}
         onSelect={handleFolderSelect}
       />
-      <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+      <main className="flex-1 overflow-y-auto bg-[var(--bg)] p-6">
         {filteredLinks.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredLinks.map((link) => (
@@ -36,7 +36,7 @@ export default function FolderPageContent({ folderId }: Props) {
             ))}
           </div>
         ) : (
-          <div className="flex items-center justify-center h-64 text-gray-400 text-sm">
+          <div className="flex items-center justify-center h-64 text-[var(--text-sub)] text-sm">
             이 폴더에 등록된 링크가 없습니다
           </div>
         )}

@@ -23,7 +23,7 @@ export default function HomeContent() {
         activeFolder={null}
         onSelect={handleFolderSelect}
       />
-      <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+      <main className="flex-1 overflow-y-auto bg-[var(--bg)] p-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {links.map((link) => (
             <LinkCard key={link.id} link={link} />
