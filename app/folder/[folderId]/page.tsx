@@ -1,4 +1,3 @@
-import Header from "@/app/components/Header";
 import FolderPageContent from "./components/FolderPageContent";
 
 export default async function FolderPage({
@@ -10,7 +9,6 @@ export default async function FolderPage({
 
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
-      <Header />
       <FolderPageContent folderId={folderId} />
     </div>
   );
