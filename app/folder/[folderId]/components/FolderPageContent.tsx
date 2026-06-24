@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { links } from "@/app/lib/mockData";
 import { useFolders } from "@/app/lib/FoldersContext";
+import { useLinks } from "@/app/lib/LinksContext";
 import Sidebar from "@/app/components/Sidebar";
 import LinkCard from "@/app/components/LinkCard";
 
@@ -13,6 +13,7 @@ type Props = {
 export default function FolderPageContent({ folderId }: Props) {
   const router = useRouter();
   const { folders } = useFolders();
+  const { links } = useLinks();
   const filteredLinks = links.filter((link) => link.folderId === folderId);
 
   function handleFolderSelect(id: string | null) {

@@ -9,6 +9,7 @@ export type LinkItem = {
   url: string;
   description: string;
   folderId: string;
+  thumbnail?: string;
 };
 
 export const folders: Folder[] = [

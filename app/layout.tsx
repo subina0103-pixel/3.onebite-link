@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FoldersProvider } from "@/app/lib/FoldersContext";
+import { LinksProvider } from "@/app/lib/LinksContext";
 import Header from "@/app/components/Header";
 
 const geistSans = Geist({
@@ -31,8 +32,10 @@ export default function RootLayout({
     >
       <body className="h-full flex flex-col">
           <FoldersProvider>
-            <Header />
-            {children}
+            <LinksProvider>
+              <Header />
+              {children}
+            </LinksProvider>
           </FoldersProvider>
         </body>
     </html>

@@ -1,14 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { links } from "@/app/lib/mockData";
 import { useFolders } from "@/app/lib/FoldersContext";
+import { useLinks } from "@/app/lib/LinksContext";
 import Sidebar from "./Sidebar";
 import LinkCard from "./LinkCard";
 
 export default function HomeContent() {
   const router = useRouter();
   const { folders } = useFolders();
+  const { links } = useLinks();
 
   function handleFolderSelect(folderId: string | null) {
     if (folderId === null) {

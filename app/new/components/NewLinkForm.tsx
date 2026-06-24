@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { folders } from "@/app/lib/mockData";
+import { useFolders } from "@/app/lib/FoldersContext";
+import { useLinks } from "@/app/lib/LinksContext";
 
 type Props = {
   selectedFolder: string | null;
@@ -10,15 +11,42 @@ type Props = {
 
 export default function NewLinkForm({ selectedFolder }: Props) {
   const router = useRouter();
+  const { folders } = useFolders();
+  const { addLink } = useLinks();
   const [url, setUrl] = useState("");
   const [folderId, setFolderId] = useState(selectedFolder ?? "");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setFolderId(selectedFolder ?? "");
   }, [selectedFolder]);
 
-  function handleSave() {
-    router.push("/");
+  async function handleSave() {
+    if (!url.trim()) {
+      setError("URL을 입력해주세요.");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/og?url=${encodeURIComponent(url.trim())}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "오픈 그래프 정보를 가져오지 못했습니다.");
+      addLink({
+        id: `link-${Date.now()}`,
+        title: data.title || url,
+        url: data.url || url,
+        description: data.description || "",
+        thumbnail: data.thumbnail ?? undefined,
+        folderId,
+      });
+      router.push("/");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "저장 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -50,8 +78,15 @@ export default function NewLinkForm({ selectedFolder }: Props) {
             ))}
           </select>
         </div>
-        <button onClick={handleSave} className="btn-primary justify-center mt-1 w-full py-2.5">
-          저장
+        {error && (
+          <p className="text-sm text-rose-500">{error}</p>
+        )}
+        <button
+          onClick={handleSave}
+          disabled={loading}
+          className="btn-primary justify-center mt-1 w-full py-2.5 disabled:opacity-50"
+        >
+          {loading ? "저장 중..." : "저장"}
         </button>
       </div>
     </div>
