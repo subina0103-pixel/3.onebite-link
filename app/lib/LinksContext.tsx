@@ -2,10 +2,20 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 import { LinkItem, links as initialLinks } from "@/app/lib/mockData";
+import { createClient } from "@/utils/supabase/client";
+
+type NewLinkInput = {
+  url: string;
+  title: string;
+  description: string;
+  thumbnail?: string;
+  folderId: string;
+};
 
 type LinksContextType = {
   links: LinkItem[];
-  addLink: (link: LinkItem) => void;
+  isAdding: boolean;
+  addLink: (link: NewLinkInput) => Promise<void>;
   deleteLink: (id: string) => void;
   updateLink: (id: string, changes: Partial<Pick<LinkItem, "title" | "description" | "folderId">>) => void;
 };
@@ -14,9 +24,38 @@ const LinksContext = createContext<LinksContextType | null>(null);
 
 export function LinksProvider({ children }: { children: ReactNode }) {
   const [links, setLinks] = useState<LinkItem[]>(initialLinks);
+  const [isAdding, setIsAdding] = useState(false);
 
-  function addLink(link: LinkItem) {
-    setLinks((prev) => [link, ...prev]);
+  async function addLink(link: NewLinkInput) {
+    if (isAdding) return;
+    setIsAdding(true);
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("links")
+        .insert({
+          url: link.url,
+          title: link.title || null,
+          description: link.description || null,
+          thumbnail_url: link.thumbnail || null,
+          folder_id: link.folderId ? Number(link.folderId) : null,
+        })
+        .select()
+        .single();
+      if (!error && data) {
+        const newLink: LinkItem = {
+          id: String(data.id),
+          title: data.title ?? "",
+          url: data.url,
+          description: data.description ?? "",
+          thumbnail: data.thumbnail_url ?? undefined,
+          folderId: data.folder_id != null ? String(data.folder_id) : "",
+        };
+        setLinks((prev) => [newLink, ...prev]);
+      }
+    } finally {
+      setIsAdding(false);
+    }
   }
 
   function deleteLink(id: string) {
@@ -28,7 +67,9 @@ export function LinksProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <LinksContext.Provider value={{ links, addLink, deleteLink, updateLink }}>
+    <LinksContext.Provider
+      value={{ links, isAdding, addLink, deleteLink, updateLink }}
+    >
       {children}
     </LinksContext.Provider>
   );

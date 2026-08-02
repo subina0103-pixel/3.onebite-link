@@ -12,7 +12,7 @@ type Props = {
 export default function NewLinkForm({ selectedFolder }: Props) {
   const router = useRouter();
   const { folders } = useFolders();
-  const { addLink } = useLinks();
+  const { addLink, isAdding } = useLinks();
   const [url, setUrl] = useState("");
   const [folderId, setFolderId] = useState(
     selectedFolder != null ? String(selectedFolder) : ""
@@ -25,6 +25,7 @@ export default function NewLinkForm({ selectedFolder }: Props) {
   }, [selectedFolder]);
 
   async function handleSave() {
+    if (loading || isAdding) return;
     if (!url.trim()) {
       setError("URL을 입력해주세요.");
       return;
@@ -35,8 +36,7 @@ export default function NewLinkForm({ selectedFolder }: Props) {
       const res = await fetch(`/api/og?url=${encodeURIComponent(url.trim())}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "오픈 그래프 정보를 가져오지 못했습니다.");
-      addLink({
-        id: `link-${Date.now()}`,
+      await addLink({
         title: data.title || url,
         url: data.url || url,
         description: data.description || "",
@@ -85,10 +85,10 @@ export default function NewLinkForm({ selectedFolder }: Props) {
         )}
         <button
           onClick={handleSave}
-          disabled={loading}
+          disabled={loading || isAdding}
           className="btn-primary justify-center mt-1 w-full py-2.5 disabled:opacity-50"
         >
-          {loading ? "저장 중..." : "저장"}
+          {loading || isAdding ? "저장 중..." : "저장"}
         </button>
       </div>
     </div>
