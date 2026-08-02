@@ -11,8 +11,8 @@ type Props = {
 export default function DeleteLinkModal({ link, onClose }: Props) {
   const { deleteLink } = useLinks();
 
-  function handleDelete() {
-    deleteLink(link.id);
+  async function handleDelete() {
+    await deleteLink(link.id);
     onClose();
   }
 

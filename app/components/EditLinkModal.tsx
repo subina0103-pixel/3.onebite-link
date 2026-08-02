@@ -17,8 +17,8 @@ export default function EditLinkModal({ link, onClose }: Props) {
   const [description, setDescription] = useState(link.description);
   const [folderId, setFolderId] = useState(link.folderId);
 
-  function handleSave() {
-    updateLink(link.id, { title, description, folderId });
+  async function handleSave() {
+    await updateLink(link.id, { title, description, folderId });
     onClose();
   }
 
