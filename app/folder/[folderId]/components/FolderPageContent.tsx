@@ -16,7 +16,7 @@ export default function FolderPageContent({ folderId }: Props) {
   const { links } = useLinks();
   const filteredLinks = links.filter((link) => link.folderId === folderId);
 
-  function handleFolderSelect(id: string | null) {
+  function handleFolderSelect(id: number | null) {
     if (id === null) {
       router.push("/");
     } else {
@@ -28,7 +28,7 @@ export default function FolderPageContent({ folderId }: Props) {
     <div className="flex flex-1 overflow-hidden">
       <Sidebar
         folders={folders}
-        activeFolder={folderId}
+        activeFolder={Number(folderId)}
         onSelect={handleFolderSelect}
       />
       <main className="flex-1 overflow-y-auto bg-[var(--bg)] p-6">

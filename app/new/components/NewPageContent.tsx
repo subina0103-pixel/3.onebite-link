@@ -6,7 +6,7 @@ import Sidebar from "@/app/components/Sidebar";
 import NewLinkForm from "./NewLinkForm";
 
 export default function NewPageContent() {
-  const [activeFolder, setActiveFolder] = useState<string | null>(null);
+  const [activeFolder, setActiveFolder] = useState<number | null>(null);
   const { folders } = useFolders();
 
   return (

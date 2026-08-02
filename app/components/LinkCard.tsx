@@ -28,7 +28,7 @@ type Props = {
 
 export default function LinkCard({ link }: Props) {
   const { folders } = useFolders();
-  const folder = folders.find((f) => f.id === link.folderId);
+  const folder = folders.find((f) => String(f.id) === link.folderId);
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 

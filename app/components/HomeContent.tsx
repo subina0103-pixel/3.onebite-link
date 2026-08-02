@@ -11,7 +11,7 @@ export default function HomeContent() {
   const { folders } = useFolders();
   const { links } = useLinks();
 
-  function handleFolderSelect(folderId: string | null) {
+  function handleFolderSelect(folderId: number | null) {
     if (folderId === null) {
       router.push("/");
     } else {

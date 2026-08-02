@@ -6,7 +6,7 @@ import { useFolders } from "@/app/lib/FoldersContext";
 import { useLinks } from "@/app/lib/LinksContext";
 
 type Props = {
-  selectedFolder: string | null;
+  selectedFolder: number | null;
 };
 
 export default function NewLinkForm({ selectedFolder }: Props) {
@@ -14,12 +14,14 @@ export default function NewLinkForm({ selectedFolder }: Props) {
   const { folders } = useFolders();
   const { addLink } = useLinks();
   const [url, setUrl] = useState("");
-  const [folderId, setFolderId] = useState(selectedFolder ?? "");
+  const [folderId, setFolderId] = useState(
+    selectedFolder != null ? String(selectedFolder) : ""
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setFolderId(selectedFolder ?? "");
+    setFolderId(selectedFolder != null ? String(selectedFolder) : "");
   }, [selectedFolder]);
 
   async function handleSave() {

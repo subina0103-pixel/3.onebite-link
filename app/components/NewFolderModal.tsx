@@ -9,11 +9,11 @@ type Props = {
 
 export default function NewFolderModal({ onClose }: Props) {
   const [name, setName] = useState("");
-  const { addFolder } = useFolders();
+  const { addFolder, isAdding } = useFolders();
 
-  function handleSave() {
-    if (!name.trim()) return;
-    addFolder(name.trim());
+  async function handleSave() {
+    if (!name.trim() || isAdding) return;
+    await addFolder(name.trim());
     onClose();
   }
 
@@ -33,17 +33,23 @@ export default function NewFolderModal({ onClose }: Props) {
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSave()}
+          disabled={isAdding}
           autoFocus
         />
         <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-md text-sm text-[var(--text)] hover:bg-[var(--hover-bg)] transition-colors cursor-pointer"
+            disabled={isAdding}
+            className="px-4 py-2 rounded-md text-sm text-[var(--text)] hover:bg-[var(--hover-bg)] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           >
             취소
           </button>
-          <button onClick={handleSave} className="btn-primary text-sm">
-            저장
+          <button
+            onClick={handleSave}
+            disabled={isAdding}
+            className="btn-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isAdding ? "저장 중..." : "저장"}
           </button>
         </div>
       </div>

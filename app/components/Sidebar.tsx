@@ -7,8 +7,8 @@ import EditFolderModal from "./EditFolderModal";
 
 type Props = {
   folders: Folder[];
-  activeFolder: string | null;
-  onSelect: (folderId: string | null) => void;
+  activeFolder: number | null;
+  onSelect: (folderId: number | null) => void;
 };
 
 function PencilIcon() {
@@ -70,9 +70,6 @@ export default function Sidebar({ folders, activeFolder, onSelect }: Props) {
           </button>
 
           <div className="mt-4">
-            <p className="px-3 mb-1 text-xs font-medium text-[var(--text-sub)] uppercase tracking-wider">
-              폴더
-            </p>
             <div className="flex flex-col gap-0.5">
               {folders.map((folder) => (
                 <div key={folder.id} className="group relative">

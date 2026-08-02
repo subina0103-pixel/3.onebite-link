@@ -1,6 +1,7 @@
 export type Folder = {
-  id: string;
+  id: number;
   name: string;
+  created_at?: string;
 };
 
 export type LinkItem = {
@@ -11,13 +12,6 @@ export type LinkItem = {
   folderId: string;
   thumbnail?: string;
 };
-
-export const folders: Folder[] = [
-  { id: "dev", name: "개발" },
-  { id: "design", name: "디자인" },
-  { id: "ai", name: "AI" },
-  { id: "util", name: "유틸리티" },
-];
 
 export const links: LinkItem[] = [
   {
