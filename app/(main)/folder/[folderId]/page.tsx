@@ -1,4 +1,4 @@
-import FolderPageContent from "./components/FolderPageContent";
+import FolderPageContent from "@/app/folder/[folderId]/components/FolderPageContent";
 
 export default async function FolderPage({
   params,

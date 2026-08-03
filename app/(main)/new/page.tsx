@@ -1,4 +1,4 @@
-import NewPageContent from "./components/NewPageContent";
+import NewPageContent from "@/app/new/components/NewPageContent";
 
 export default function NewLinkPage() {
   return (
